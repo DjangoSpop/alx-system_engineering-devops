@@ -1,0 +1,1 @@
+this is an explination of all the shell basics commands 

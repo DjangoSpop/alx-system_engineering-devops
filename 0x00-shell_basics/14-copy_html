@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Set the source directory as the current working directory
+source_dir=$(pwd)
+
+# Set the destination directory as the parent directory
+destination_dir=$(dirname "$source_dir")
+
+# Copy all HTML files to the parent directory
+cp "$source_dir"/*.html "$destination_dir"
+
+# Display success message
+echo "Copied all HTML files to $destination_dir"
