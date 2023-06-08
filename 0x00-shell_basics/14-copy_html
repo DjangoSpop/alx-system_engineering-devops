@@ -1,2 +1,2 @@
 #!/bin/bash
-find.-maxdepth1-name"*.html"-newer../-exec cp 
+cp -u *.html ../
