@@ -1,0 +1,2 @@
+#!/bin/bash
+ls -1pd .[!.]* [[:digit:][:alpha:]]* | paste -sd ',' -; echo
