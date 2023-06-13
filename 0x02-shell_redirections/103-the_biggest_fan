@@ -1,2 +1,2 @@
-/bin/bash
+#!/bin/bash
 cut -f1 webserver.log | sort | uniq -c | sort -rn | head -n 11
