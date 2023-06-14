@@ -1,0 +1,2 @@
+#!/bin/sh
+printf "%d\n" "$((2#$BINARY))"
