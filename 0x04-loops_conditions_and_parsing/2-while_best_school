@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
+#learning is a practiceing process like gaining the experince you need
 count=0
-
-# Use a while loop to repeat the message until the counter reaches 10
-while [ $count -lt 10 ]; do
+while [ "$count" > 10 ]; do
   echo "Best School"
   ((count++))  # Increment the counter
 done
