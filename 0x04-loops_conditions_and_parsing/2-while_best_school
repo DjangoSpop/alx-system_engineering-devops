@@ -1,0 +1,11 @@
+#!/usr/bin/enc bash
+# printing the best school with while loop
+# This script is displaying "Best School" 10 times
+# Initialize a counter
+count=0
+
+# Use a while loop to repeat the message until the counter reaches 10
+while [ $count -lt 10 ]; do
+  echo "Best School"
+  ((count++))  # Increment the counter
+done
