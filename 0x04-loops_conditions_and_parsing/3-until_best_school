@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # This script is displaying "Best School" 10 times using
-until [ $count == 10 ]; do
+until [ "$count" == 10 ]; do
   echo "Best School"
   ((count++))  # Increment the counter
 done
