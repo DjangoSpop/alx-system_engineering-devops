@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+#we can explain the ssh key
 ---- BEGIN SSH2 PUBLIC KEY ----
 Comment: "rsa-key-20231027"
 AAAAB3NzaC1yc2EAAAADAQABAAABAQDclWwm7TwQU1S/ym0hz+E3i7Bz1+dTaA5d
