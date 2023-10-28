@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 #we can do this while echo print 
 hour=0
+minute=1
 
-while [ "$hour" -le 12 ]; do
+while [ "$hour" -le 12 ] && [ "$minute" -le 59 ]; do
   echo "Hour: $hour"
-  for minute in {1..59}; do
+  while [ "$minute" -le 59 ]; do
     echo "$minute"
+    minute=$((minute + 1))
   done
+  minute=1
   hour=$((hour + 1))
-done
+done | head -n 70
+
