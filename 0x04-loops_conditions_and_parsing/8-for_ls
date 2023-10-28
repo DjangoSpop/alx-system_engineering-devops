@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#work with for loop to work on
+
+for file in *; do
+  if [[ -f $file && ! -h $file && ! $file =~ ^\..* ]]; then
+    name_without_dash=$(echo "$file" | cut -d '-' -f 2-)
+    echo "$name_without_dash"
+  fi
+done
