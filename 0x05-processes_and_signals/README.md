@@ -1,0 +1,1 @@
+we can explain pid process in linux and how to muniplate 
