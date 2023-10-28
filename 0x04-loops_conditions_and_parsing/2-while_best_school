@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #learning is a practiceing process like gaining the experince you need
-count=0
-while [ "$count" != 10 ]; do
+index=0
+while [ $index -lt 10 ]
+do
   echo "Best School"
-  ((count++))  
+  ((index++))
 done
