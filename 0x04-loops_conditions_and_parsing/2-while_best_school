@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#learning is a practiceing process like gaining the experince you need
+index=0
+while [ $index -lt 10 ]
+do
+  echo "Best School"
+  ((index++))
+done

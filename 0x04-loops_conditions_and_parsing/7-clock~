@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#we can do this while echo print 
+hour=0
+
+while [ "$hour" -le 12 ]; do
+  echo "Hour: $hour"
+  for minute in {1..59}; do
+    echo $minute
+  done
+  hour=$((hour + 1))
+done
