@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
-# Define variables
-private_key="~/.ssh/school"
-user="ubuntu"
-server_address="440835-web-01"  # Replace with your actual server address or IP
-server_ip="57.237.98.62"
-# Use ssh with single-character flags
-ssh -i $private_key $user@$server_address
 
+
+# Server details
+server_ip="54.237.98.62"
+user="ubuntu"
+private_key="~/.ssh/school"
+
+# SSH connection using single-character flags
+ssh -i "$private_key" "$user@$server_ip"
+
+# Connects to server 54.237.98.62 with key in ~/.ssh/schoossh -i ~/.ssh/school ubuntu@54.237.98.62
