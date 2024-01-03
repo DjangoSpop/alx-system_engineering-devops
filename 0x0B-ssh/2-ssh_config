@@ -1,0 +1,5 @@
+Host ubntu
+   HostName 54.237.98.62
+   User ubunu
+   IdentityFile ~/.ssh/school
+   PasswordAuthntication no
