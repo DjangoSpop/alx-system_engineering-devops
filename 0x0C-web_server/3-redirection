@@ -14,3 +14,5 @@ sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled
 
 # Restarting Nginx service
 sudo service nginx restart
+
+
