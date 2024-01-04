@@ -1,29 +1,6 @@
-package { 'nginx':
-  ensure => installed,
-}
+# Installs a Nginx server
 
-service { 'nginx':
-  ensure => running,
-  enable => true,
-}
-
-file { '/var/www/html/index.html':
-  ensure => file,
-  content => 'Hello Holberton',
-}
-
-file_line { 'nginx_config':
-  path => '/etc/nginx/sites-available/default',
-  after => 'listen 80 default_server;',
-  line => 'rewrite ^/redirect_me https://www.youtube.com/ permanent;'  
-}
-
-package { 'curl':
-  ensure => installed,
-}
-
-cron { 'script':
-  command => '/usr/bin/curl 0:80 > /tmp/proof',
-  hour    => '*',
-  minute  => '*/1',
+exec {'install':
+  provider => shell,
+  command  => 'sudo apt-get -y update ; sudo apt-get -y install nginx ; echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html ; sudo sed -i "s/server_name _;/server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/luischaparroc permanent;/" /etc/nginx/sites-available/default ; sudo service nginx start',
 }
