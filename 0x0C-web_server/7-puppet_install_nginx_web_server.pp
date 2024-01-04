@@ -1,48 +1,29 @@
 package { 'nginx':
- ensure => installed,
+  ensure => installed,
 }
 
-file_line { 'install':
- ensure => 'present',
- path   => '/etc/nginx/sites-enabled/default',
- after => 'listen 80 default_server;',
- line   => 'rewrite ^/redirect_me http:https://github.com/DjangoSpop/alx-system_engineering-devops;',
+service { 'nginx':
+  ensure => running,
+  enable => true,
 }
 
 file { '/var/www/html/index.html':
- content => 'Hello World!',
+  ensure => file,
+  content => 'Hello Holberton',
 }
 
-file { '/var/www/html/404.html':
- content => 'Error 404: Page not found!',
-}
- service { 'nginx':
- ensure => running,
- require => Package['nginx'],
+file_line { 'nginx_config':
+  path => '/etc/nginx/sites-available/default',
+  after => 'listen 80 default_server;',
+  line => 'rewrite ^/redirect_me https://www.youtube.com/ permanent;'  
 }
 
-file { '/etc/nginx/sites-enabled/default':
- ensure => file,
- notify => Service['nginx'],
- content => "
- server {
-     listen 80 default_server;
-     listen [::]:80 default_server;
-
-     root /var/www/html;
-     index index.html index.htm index.nginx-debian.html;
-
-     server_name _;
-
-     location / {
-       try_files $uri $uri/ =404;
-     }
-
-     error_page 404 /404.html;
-     location = /404.html {
-       internal;
-     }
- }
- ",
+package { 'curl':
+  ensure => installed,
 }
 
+cron { 'script':
+  command => '/usr/bin/curl 0:80 > /tmp/proof',
+  hour    => '*',
+  minute  => '*/1',
+}
