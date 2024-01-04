@@ -3,16 +3,26 @@
 
 # Updating Packages before making Installations
 sudo apt-get update
-sudo apt-get -y install nginx
+sudo apt-get install nginx -y
 
-# Configuring the Uncomplicated Firewall (UFW) to allow incoming traffic for the Nginx HTTP service
-sudo ufw allow 'Nginx HTTP'
+echo "server {
+      listen 80 defult_server;
+      listen [::]:80 defylt_server;
+      
+      root /var/www/html;
+      index index.html;
+      
+      server_name _;
+      
+      
+      location / {
+              return 200 'Hello World!';
+              add_header Content-Type text/plain;
+}
+}" | sudo tee /etc/nginx/sites-available/defult
 
-# Creating an index.html page
-echo "Hello World!" | sudo tee /var/www/html/index.html
 
-# Testing Nginx configurations for Syntax errors
-sudo nginx -t
 
-# Restarting Nginx
-sudo service nginx start
+sudo ufw allow 'nginx HTTP'
+sudo service nginx restart 
+curl http://localhosts/
