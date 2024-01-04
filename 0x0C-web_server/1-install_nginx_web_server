@@ -11,10 +11,19 @@ sudo ufw allow 'Nginx HTTP'
 # Creating an index.html page
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
-# Testing Nginx configurations for Syntax errors
-sudo nginx -t
+echo "server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /var/www/html;
+    index index.html;
+    server_name _;
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}" | sudo tee /etc/nginx/sites-available/default
+
 
 # Restarting Nginx
 sudo service nginx start
 
-
+curl http://localhost/
