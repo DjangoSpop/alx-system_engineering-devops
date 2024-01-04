@@ -1,16 +1,80 @@
-#!/usr/bin/env bash
-#  A Script that configures a new Ubuntu machine to Perform a 301-redirection
+#!/bin/bash
 
-# Upadating Packages before Installations
+# Update the package list
 sudo apt-get update
+
+# Install nginx
 sudo apt-get install -y nginx
 
-# Creating an index.html page
-echo "Hello World!" | sudo tee /var/www/html/index.html
+# Start nginx and enable it to start on boot
+sudo systemctl start nginx
+sudo systemctl enable nginx
 
-# Performing a 301 Redirection
-string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/besthor permanent;"
-sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+# Install and start mysql
+sudo apt-get install -y mysql-server
+sudo systemctl start mysql
+sudo systemctl enable mysql
 
-# Restarting Nginx service
-sudo service nginx restart
+# Install php and modules
+sudo apt-get install -y php-fpm php-mysql
+
+# Restart php to ensure changes take effect
+sudo systemctl restart php7.4-fpm
+
+# Configure nginx to serve php files
+sudo sed -i 's/index index.html index.htm index.nginx-debian.html;/index index.php index.html index.htm index.nginx-debian.html;/' /etc/nginx/sites-available/default
+
+# Restart nginx to ensure changes take effect
+sudo systemctl restart nginx
+
+# Remove default nginx site
+sudo rm /etc/nginx/sites-enabled/default
+
+# Create a directory for your project
+sudo mkdir /var/www/your_project
+
+# Set permissions for your project directory
+sudo chown -R $USER:$USER /var/www/your_project
+
+# Create a virtual host configuration file for your project
+sudo nano /etc/nginx/sites-available/your_project
+
+# Add the following lines to the virtual host configuration file, replacing "your_domain" with your actual domain name and "/var/www/your_project" with your project directory path
+server {
+    listen 80;
+    server_name your_domain;
+    root /var/www/your_project;
+    index index.php index.html index.htm;
+    location / {
+        try_files $uri $uri/ =404;
+    }
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+    }
+    location ~ /\.ht {
+        deny all;
+    }
+}
+
+# Create a symbolic link from the "sites-available" directory to the "sites-enabled" directory
+sudo ln -s /etc/nginx/sites-available/your_project /etc/nginx/sites-enabled/
+
+# Restart nginx to ensure changes take effect
+sudo systemctl restart nginx
+
+# Create a new php file for your project in the project directory
+sudo nano /var/www/your_project/index.php
+
+# Add the following lines to the php file, replacing "your_project" with your actual project name
+<?php
+phpinfo();
+?>
+
+# Set appropriate permissions for the php file
+sudo chmod 644 /var/www/your_project/index.php
+
+# Restart php to ensure changes take effect
+sudo systemctl restart php7.4-fpm
+
+# Now, if you visit your_domain in your browser, you should see the php info page
