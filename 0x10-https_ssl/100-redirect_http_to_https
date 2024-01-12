@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 global
         log /dev/log    local0
         log /dev/log    local1 notice
@@ -49,3 +50,49 @@ backend besthor_back_end
 
 backend letsencrypt-backend
     server letsencrypt 127.0.0.1:54321
+=======
+global
+    log /dev/log local0
+    log /dev/log local1 notice
+    chroot /var/lib/haproxy
+    user haproxy
+    group haproxy
+    daemon
+
+    # Default SSL material locations
+    ca-base /etc/ssl/certs
+    crt-base /etc/ssl/private
+
+    # Default ciphers to use on SSL-enabled listening sockets.
+    ssl-default-bind-ciphers PROFILE=SYSTEM
+    ssl-default-bind-options no-sslv3
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    timeout connect 5000ms
+    timeout client  50000ms
+    timeout server  50000ms
+
+# Frontend for HTTP - Redirect to HTTPS
+frontend http_front
+    bind *:80
+    mode http
+    redirect scheme https code 301 if !{ ssl_fc }
+
+# Frontend for HTTPS
+frontend https_front
+    bind *:443 ssl crt /etc/haproxy/certs/yourdomain.pem
+    mode http
+    default_backend web-backend
+
+# Backend configuration
+backend web-backend
+    mode http
+    balance roundrobin
+    option httpchk
+    server web1 web-01.yourdomain.com:80 check
+    server web2 web-02.yourdomain.com:80 check
+>>>>>>> 35b7b6ec5740f875e3c2c83f5eb5586b63d0e466
