@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+<<<<<<< HEAD
 # Displays informtation about subdomains.
 
 # uncomment for debugging purposes.
@@ -33,3 +34,39 @@ if [ $# -eq 1 ]; then
 elif [ $# -eq 2 ]; then
 	dig_cmd "$domain" "$sub"
 fi
+=======
+# Script to display information about subdomains
+
+# Function to display subdomain info
+display_info() {
+    local domain=$1
+    local subdomain=$2
+    local record_type="A"  # Assuming A records for simplicity
+    local destination=""
+
+    # Define destination based on subdomain
+    case $subdomain in
+        "www") destination="54.208.44.254" ;;
+        "lb-01") destination="52.91.153.209" ;;
+        "web-01") destination="54.208.44.254" ;;
+        "web-02") destination="34.229.68.184" ;;
+    esac
+
+    echo "The subdomain $subdomain.$domain is a $record_type record and points to $destination"
+}
+
+# Main script logic
+domain=$1
+subdomain=$2
+
+if [[ -z "$subdomain" ]]; then
+    # Display info for default subdomains if subdomain is not provided
+    for sub in "www" "lb-01" "web-01" "web-02"; do
+        display_info "$domain" "$sub"
+    done
+else
+    # Display info for specific subdomain
+    display_info "$domain" "$subdomain"
+fi
+
+>>>>>>> 7066d2016c5d7821c3c2b31f18da1281a9564784

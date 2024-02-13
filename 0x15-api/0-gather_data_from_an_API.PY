@@ -1,57 +1,37 @@
+#!/usr/bin/python3
+"""
+A Script that, uses this REST API, for a given employee ID, returns
+information about his/her TODO list progress
+"""
 
-import sys
+import json
 import requests
-import typing
-import urllib
-#whats suprvised learning ?
-#whats unsupervised learning ?
-def get_user(user_id: int) -> typing.Dict:
-    """Fetch user data from the API."""
-    url = "https://jsonplaceholder.typicode.com/users/"
-    response = requests.get(url + f"{user_id}")
-    response.raise_for_status()
-    return response.json()
+from sys import argv
 
-def get_tasks_for_employee(employee_id: int) -> typing.List[typing.Dict]:
-    """Fetch tasks for a given employee ID."""
-    url = "https://jsonplaceholder.typicode.com/todos"
-    params = {"userId": employee_id}
-    response = requests.get(url, params=params)
-    response.raise_for_status()
-    return response.json()
-def get_user_data(user_id):
-    """Fetch user data from the API."""
-    url = "https://jsonplaceholder.typicode.com/users/"
-    response = requests.get(url + f"{user_id}")
-    response.raise_for_status()
-    return response.json()
-
-def get_completed_tasks_titles(todos: typing.List[typing.Dict]) -> typing.List[str]:
-    """Return a list of completed tasks' titles."""
-    return [todo["title"] for todo in todos if todo.get("completed", False)]
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python3 todo.py <employee_id>")
-        sys.exit(1)
 
-    employee_id = sys.argv[1]
-    try:
-        employee_id = int(employee_id)
-    except ValueError:
-        print(f"Invalid employee ID: {employee_id} should be an integer.")
-        sys.exit(1)
+    sessionReq = requests.Session()
 
-    try:
-        user = get_user(employee_id)
-        todos = get_tasks_for_employee(employee_id)
-    except requests.exceptions.HTTPError as e:
-        print(e)
-        sys.exit(1)
+    idEmp = argv[1]
+    idURL = 'https://jsonplaceholder.typicode.com/users/{}/todos'.format(idEmp)
+    nameURL = 'https://jsonplaceholder.typicode.com/users/{}'.format(idEmp)
 
-    completed_tasks = get_completed_tasks_titles(todos)
-    num_completed = len(completed_tasks)
+    employee = sessionReq.get(idURL)
+    employeeName = sessionReq.get(nameURL)
 
-    if num_completed > 0:
-        print(f"{num_completed} tasks were completed:")
-        print("\n".join(completed_tasks))
+    json_req = employee.json()
+    name = employeeName.json()['name']
+
+    totalTasks = 0
+
+    for done_tasks in json_req:
+        if done_tasks['completed']:
+            totalTasks += 1
+
+    print("Employee {} is done with tasks({}/{}):".
+          format(name, totalTasks, len(json_req)))
+
+    for done_tasks in json_req:
+        if done_tasks['completed']:
+            print("\t " + done_tasks.get('title'))
