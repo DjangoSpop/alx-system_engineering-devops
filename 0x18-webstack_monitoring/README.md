@@ -9,3 +9,4 @@
 To setup datadog u should setup the agent on your server first and add the api kei by serching setting up agent in data dog web site then you
 make the key on your server you will see your dog thats after you create an account and then voila you can monitor your server know 
 ![alt text](image.png)
+https://p.datadoghq.com/sb/6a5091b6-cb41-11ee-8eb2-da7ad0900002-b7754a2e47775f70ffff417df4ce3e14
