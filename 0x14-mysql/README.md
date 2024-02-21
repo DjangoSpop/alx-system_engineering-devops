@@ -1,0 +1,1 @@
+ Setiing app the server and setting the sql on it is a way eexperince every devops guy must work on it and we can then explain every aspect of how to install and set up the enviorment as a back end or a full stack developer
