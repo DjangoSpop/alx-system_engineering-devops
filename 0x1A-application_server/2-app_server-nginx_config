@@ -13,6 +13,8 @@ server {
 
     # Serve /airbnb-onepage/ route from AirBnB_clone_v2
     location = /airbnb-onepage/ {
+        root   /home/ubuntu/AirBnB_clone_v2/public/;
+        index  index.html index.htm;
         proxy_pass http://127.0.0.1:5500/airbnb-onepage/;
     }
 
